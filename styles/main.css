@@ -63,12 +63,7 @@ body {
  }
 
  .links-container .navbar-link:active {
-<<<<<<< HEAD
      background-color:white;
-=======
-     color: rgb(233,50,117);
-     background: white;
->>>>>>> assignment-8-CollectionView
  }
 
 

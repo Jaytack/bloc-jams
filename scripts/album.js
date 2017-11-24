@@ -68,8 +68,11 @@ var setCurrentAlbum = function(album) {
 var songListContainer = document.getElementsByClassName('album-view-song-list')[0];
 var songRows = document.getElementsByClassName('album-view-song-item');
 
-// Album button templates
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
+var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
+
+// Store state of playing songs
+var currentlyPlayingSong = null;
 
 window.onload = function() {
     setCurrentAlbum(albumPicasso);
@@ -80,7 +83,19 @@ window.onload = function() {
      });
     for (var i = 0; i < songRows.length; i++) {
          songRows[i].addEventListener('mouseleave', function(event) {
+             // Selects first child element, which is the song-item-number element
              this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
          });
+
+         ...
+    for (var i = 0; i < songRows.length; i++) {
+        songRows[i].addEventListener('mouseleave', function(event) {
+            // Selects first child element, which is the song-item-number element
+            this.children[0].innerHTML = this.children[0].getAttribute('data-song-number');
+        });
+
+        songRows[i].addEventListener('click', function(event) {
+            // Event handler call
+        });
     }
 };

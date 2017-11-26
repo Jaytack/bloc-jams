@@ -23,90 +23,90 @@ var albumMarconi = {
     albumArtUrl: 'assets/images/album_covers/20.png',
     songs: [
         { title: 'Hello, Operator?', duration: '1:01' },
-        { title: 'Ring, ring, ring', duration: '5:01' },
-        { title: 'Fits in your pocket', duration: '3:21' },
-        { title: 'Can you hear me now?', duration: '3:14' },
-        { title: 'Wrong phone number', duration: '2:15' }
+        { title: 'Ring, Ring, Ring', duration: '5:01' },
+        { title: 'Fits In Your Pocket', duration: '3:21' },
+        { title: 'Can You Hear Me Now?', duration: '3:14' },
+        { title: 'Wrong Number', duration: '2:15' }
     ]
 };
 
-var createSongRow = function(songNumber, songName, songLength) {
+var createSongRow = function createSongRow(trackNumber, title, duration) {
     var template =
         '<tr class="album-view-song-item">'
-    +   '  <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
-    +   '  <td class="song-item-title">' + songName + '</td>'
-    +   '  <td class="song-item-duraiton">' + songLength + '</td>'
-    +   '</tr>'
+      + '   <td class="song-item-number" data-track-number="' + trackNumber + '">' + trackNumber + '</td>'
+      + '   <td class="song-item-title">' + title + '</td>'
+      + '   <td class="song-item-duration">' + duration + '</td>'
+      + '</tr>'
     ;
 
     var $row = $(template);
 
-    var clickHandler = function() {
-        // clickHandler logic
+    var clickHandler = function clickHandler() {
+        var songTrackNumber = $(this).attr('data-track-number');
+
+        if (!currentlyPlayingSong) {
+            $(this).html(pauseButtonTemplate);
+            currentlyPlayingSong = songTrackNumber;
+        } else if (currentlyPlayingSong === songTrackNumber) {
+            $(this).html(playButtonTemplate);
+            currentlyPlayingSong = null;
+        } else if (currentlyPlayingSong !== songTrackNumber) {
+            var currentlyPlayingSongElement = $('.song-item-number[data-track-number="' + currentlyPlayingSong + '"]');
+            currentlyPlayingSongElement.html(currentlyPlayingSong);
+            $(this).html(pauseButtonTemplate);
+            currentlyPlayingSong = songTrackNumber;
+        }
     };
 
+    var onHover = function onHover(event) {
+        var $songItem = $(this).find('.song-item-number');
+        var songItemNumber = $songItem.attr('data-track-number');
 
-        var onHover = function(event) {
-            // Placeholder for function logic
-        };
-        var offHover = function(event) {
-            // Placeholder for function logic
-        };
+        if (songItemNumber !== currentlyPlayingSong) {
+            $songItem.html(playButtonTemplate);
+        }
+    };
 
-    // #1
-     $row.find('.song-item-number').click(clickHandler);
-     // #2
-     $row.hover(onHover, offHover);
-     // #3
-     return $row;
+    var offHover = function offHover(event) {
+        var $songItem = $(this).find('.song-item-number');
+        var songItemNumber = $songItem.attr('data-track-number');
+
+        if (songItemNumber !== currentlyPlayingSong) {
+            $songItem.html(songItemNumber);
+        }
+    };
+
+    $row.find('.song-item-number').click(clickHandler);
+    $row.hover(onHover, offHover);
+
+    return $row;
 };
 
-var setCurrentAlbum = function(album) {
-  var $albumTitle = $('.album-view-title');
-  var $albumArtist = $('.album-view-artist');
-  var $albumReleaseInfo = $('.album-view-release-info');
-  var $albumImage = $('.album-cover-art');
-  var $albumSongList = $('.album-view-song-list');
+var setCurrentAlbum = function setCurrentAlbum(album) {
+    var $albumTitle = $('.album-view-title');
+    var $albumArtist = $('.album-view-artist');
+    var $albumReleaseInfo = $('.album-view-release-info');
+    var $albumImage = $('.album-cover-art');
+    var $albumSongList = $('.album-view-song-list');
 
-  $albumTitle.text(album.title);
-  $albumArtist.text(album.artist);
-  $albumReleaseInfo.text(album.year + ' ' + album.label);
-  $albumImage.attr('src', album.albumArtUrl);
+    $albumTitle.text(album.title);
+    $albumArtist.text(album.artist);
+    $albumReleaseInfo.text(album.year + ' ' + album.label);
+    $albumImage.attr('src', album.albumArtUrl);
 
-  $albumSongList.empty();
+    $albumSongList.empty();
 
     for (var i = 0; i < album.songs.length; i++) {
-      var $newRow = createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
-      $albumSongList.append($newRow);
+        var $newRow = createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
+        $albumSongList.append($newRow);
     }
 };
 
-// checkpoint - Izumi's own update-1 : Change the Song Number to the Pause Button
-
-
-// Album button templates
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
 var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause"></span></a>';
 
-//Store state of playing songs
 var currentlyPlayingSong = null;
 
-// checkpoint - Izumi's own update-1 :Change the Song Number to the Pause Button
-var numToPlayIcon = function(event) {
-    if (event.target.parentElement.className === 'album-view-song-item') {
-        event.target.parentElement.querySelector('.song-item-number').innerHTML = pauseButtonTemplate;
-        // checkpoint - Izumi's own update-2 :getSongItem() Method
-        var songItem = getSongItem(event.target);
-
-        if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong) {
-            songItem.innerHTML = playButtonTemplate;
-        }
-    }
-};
-
-
-$(document).ready(function() {
+$(document).ready(function () {
     setCurrentAlbum(albumPicasso);
-
-
 });

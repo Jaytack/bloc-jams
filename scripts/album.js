@@ -63,12 +63,22 @@ var setCurrentAlbum = function(album) {
 
 // checkpoint - Izumi's own update-1 : Change the Song Number to the Pause Button
 var findParentByClassName = function(element, targetClass) {
+//26-Assignment add below 1 line
+    var currentParent = element.parentElement;
+//
     if (element) {
-        var currentParent = element.parentElement;
+
+        //26-Assignment  delete 1 line bellow
+        //var currentParent = element.parentElement;
+
         while (currentParent.className != targetClass && currentParent.className !== null) {
             currentParent = currentParent.parentElement;
         }
         return currentParent;
+    //26-Assignment  add below 3 lines
+        }
+        if (currentParent.className == null) {
+            console.log("No parent found with " + targetClass)
     }
 };
 // Izumi's own update-1 until here

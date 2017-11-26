@@ -4,11 +4,7 @@ var animatePoints = function() {
       // #7
       $(this).css({
         opacity: 1,
-<<<<<<< HEAD
-        transform: 'scaleX(1) translateY(0)',
-=======
         transform: 'scaleX(1) translateY(0)'
->>>>>>> checkpoint-31-jQuery-Next_and_PreviousButtons
         color: 'white'
       });
     };

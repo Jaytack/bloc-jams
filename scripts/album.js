@@ -7,6 +7,7 @@ var createSongRow = function createSongRow(trackNumber, title, duration) {
       + '</tr>'
     ;
 
+
     var $row = $(template);
 
     var clickHandler = function clickHandler() {

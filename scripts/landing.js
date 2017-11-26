@@ -5,6 +5,7 @@ var animatePoints = function() {
       $(this).css({
         opacity: 1,
         transform: 'scaleX(1) translateY(0)'
+        color: 'white'
       });
     };
            // #6

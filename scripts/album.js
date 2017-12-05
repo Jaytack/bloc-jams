@@ -61,19 +61,22 @@ var setCurrentAlbum = function(album) {
     }
 };
 
-// checkpoint - Izumi's own update-1 : Change the Song Number to the Pause Button
+// checkpoint - update-1 : Change the Song Number to the Pause Button
 var findParentByClassName = function(element, targetClass) {
+  // #26 assigment
+  var currentParent = element.parentElement;
+  //
     if (element) {
-        var currentParent = element.parentElement;
         while (currentParent.className != targetClass && currentParent.className !== null) {
             currentParent = currentParent.parentElement;
         }
-        return currentParent;
+         if (currentParent.className == null) {
+            console.log("No parent found with " + targetClass)
     }
 };
-// Izumi's own update-1 until here
+// update-1 until here
 
-// checkpoint - Izumi's own update-2 : getSongItem() Method
+// checkpoint - update-2 : getSongItem() Method
 var getSongItem = function(element) {
     switch (element.className) {
         case 'album-song-button':
@@ -91,7 +94,7 @@ var getSongItem = function(element) {
             return;
     }
 };
-// Izumi's own update-2 until here
+// update-2 until here
 
 
 var clickHandler = function(targetElement) {
@@ -123,11 +126,11 @@ var pauseButtonTemplate = '<a class="album-song-button"><span class="ion-pause">
 //Store state of playing songs
 var currentlyPlayingSong = null;
 
-// checkpoint - Izumi's own update-1 :Change the Song Number to the Pause Button
+// checkpoint - update-1 :Change the Song Number to the Pause Button
 var numToPlayIcon = function(event) {
     if (event.target.parentElement.className === 'album-view-song-item') {
         event.target.parentElement.querySelector('.song-item-number').innerHTML = pauseButtonTemplate;
-        // checkpoint - Izumi's own update-2 :getSongItem() Method
+        // checkpoint - update-2 :getSongItem() Method
         var songItem = getSongItem(event.target);
 
         if (songItem.getAttribute('data-song-number') !== currentlyPlayingSong) {

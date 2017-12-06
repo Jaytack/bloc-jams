@@ -1,32 +1,39 @@
-var createSongRow = function createSongRow(trackNumber, title, duration) {
+var setSong = function(songNumber){
+    currentlyPlayingSongNumber = parseInt(songNumber);
+    currentSongFromAlbum = currentAlbum.songs[songNumber -1];
+};
+
+var getSongNumberCell = function(number){
+    return $('.song-item-number[data-song-number="'  number + '"]');
+};
+
+var createSongRow = function (songNumber, songNames, songLength) {
     var template =
         '<tr class="album-view-song-item">'
-      + '   <td class="song-item-number" data-track-number="' + trackNumber + '">' + trackNumber + '</td>'
-      + '   <td class="song-item-title">' + title + '</td>'
-      + '   <td class="song-item-duration">' + duration + '</td>'
+      + '   <td class="song-item-number" data-song-number="' + songNumber + '">' + songNumber + '</td>'
+      + '   <td class="song-item-title">' + songName + '</td>'
+      + '   <td class="song-item-duration">' + songLength + '</td>'
       + '</tr>'
     ;
 
     var $row = $(template);
 
-    var clickHandler = function clickHandler() {
-        var songTrackNumber = parseInt($(this).attr('data-track-number'));
+    var clickHandler = function() {
+        var songNumber = parseInt($(this).attr('data-song-number'));
 
         if (currentlyPlayingSongNumber === null) {
-            $(this).html(pauseButtonTemplate);
-            setSong(songTrackNumber);
-            updatePlayerBarSong();
-        } else if (currentlyPlayingSongNumber === songTrackNumber) {
+          var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
+          currentlyPlayingCell.html(currentlyPlayingSongNumber);
+        }
+        if (currentlyPlayingSongNumber !== songNumber) {
+          $(this).html(pauseButtonTemplate);
+          setSong(songTrackNumber);
+          updatePlayerBarSong();
+        } else if (currentlyPlayingSongNumber === songNumber) {
             $(this).html(playButtonTemplate);
             currentlyPlayingSongNumber = null;
             currentSongFromAlbum = null;
             $('.main-controls .play-pause').html(playerBarPlayButton);
-        } else if (currentlyPlayingSongNumber !== songTrackNumber) {
-            var currentlyPlayingSongElement = getSongNumberCell(currentlyPlayingSongNumber);
-            currentlyPlayingSongElement.empty().text(currentlyPlayingSongNumber);
-            $(this).html(pauseButtonTemplate);
-            setSong(songTrackNumber);
-            updatePlayerBarSong();
         }
     };
 
